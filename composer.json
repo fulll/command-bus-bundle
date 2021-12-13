@@ -14,6 +14,9 @@
         "symfony/event-dispatcher": "~2.5|~3.0|~4.0",
         "fulll/command-bus": "^3.4"
     },
+    "repositories": [
+        { "type": "git", "url": "git@github.com:fulll/command-bus.git" }
+    ],
     "autoload": {
         "psr-4": { "Rezzza\\CommandBusBundle\\": "" }
     },
