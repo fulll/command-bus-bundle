@@ -18,7 +18,7 @@ class RezzzaCommandBusExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $config    = $processor->processConfiguration(new Configuration(), $configs);
@@ -35,7 +35,7 @@ class RezzzaCommandBusExtension extends Extension
         $loader->load('services.xml');
     }
 
-    private function createBus($name, array $config, ContainerBuilder $container, $loggerNormalizer, array $logLevels)
+    private function createBus($name, array $config, ContainerBuilder $container, $loggerNormalizer, array $logLevels): void
     {
         $providerName          = current(array_keys($config));
         $commandBusServiceName = $this->getCommandBusServiceName($name);
@@ -68,7 +68,7 @@ class RezzzaCommandBusExtension extends Extension
         }
     }
 
-    private function createRabbitMqBusCommandBus($commandBusServiceName, $config, ContainerBuilder $container)
+    private function createRabbitMqBusCommandBus($commandBusServiceName, $config, ContainerBuilder $container): void
     {
         $service = new Definition('%rezzza_command_bus.old_sound_rabbit_bus.class%', [
             new Reference($config['producer_guesser']),
@@ -87,7 +87,7 @@ class RezzzaCommandBusExtension extends Extension
         }
     }
 
-    private function createSncRedisBusCommandBus($commandBusServiceName, $config, ContainerBuilder $container)
+    private function createSncRedisBusCommandBus($commandBusServiceName, $config, ContainerBuilder $container): void
     {
         $client       = new Reference(sprintf('snc_redis.%s_client', $config['client']));
         $serializer   = new Reference($config['serializer']);
@@ -114,7 +114,7 @@ class RezzzaCommandBusExtension extends Extension
         }
     }
 
-    private function createConsumerDefinition($name, Definition $defaultProvider, array $config, $commandBusServiceName, ContainerBuilder $container)
+    private function createConsumerDefinition($name, Definition $defaultProvider, array $config, $commandBusServiceName, ContainerBuilder $container): void
     {
         $consumerDefinition = new Definition('%rezzza_command_bus.consumer.class%',
             [
@@ -165,7 +165,7 @@ class RezzzaCommandBusExtension extends Extension
         }
     }
 
-    private function loadHandlers(array $handlers, ContainerBuilder $container)
+    private function loadHandlers(array $handlers, ContainerBuilder $container): void
     {
         if (isset($handlers['retry'])) {
             $config = $handlers['retry'];
@@ -194,7 +194,7 @@ class RezzzaCommandBusExtension extends Extension
         }
     }
 
-    private function decorateBus($busServiceId, ContainerBuilder $container, $loggerNormalizer, array $logLevels)
+    private function decorateBus($busServiceId, ContainerBuilder $container, $loggerNormalizer, array $logLevels): void
     {
         $originalBusServiceId = $busServiceId.'.original';
         $container
@@ -217,12 +217,12 @@ class RezzzaCommandBusExtension extends Extension
         ;
     }
 
-    private function getCommandBusServiceName($commandBus)
+    private function getCommandBusServiceName($commandBus): string
     {
         return sprintf('rezzza_command_bus.command_bus.%s', $commandBus);
     }
 
-    private function getPriorityValue($priority)
+    private function getPriorityValue($priority): ?int
     {
         switch ($priority) {
             case Configuration::PRIORITY_HIGH:
@@ -234,7 +234,7 @@ class RezzzaCommandBusExtension extends Extension
         }
     }
 
-    private function createLoggerReference()
+    private function createLoggerReference(): Reference
     {
         return new Reference('logger', ContainerInterface::NULL_ON_INVALID_REFERENCE);
     }
