@@ -28,7 +28,7 @@ class ConsumeCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('rezzza:command_bus:consume')
@@ -45,7 +45,7 @@ class ConsumeCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $lockKey        = $input->getOption('lock');
         $commandClass   = $input->getArgument('command_class');
@@ -89,5 +89,7 @@ class ConsumeCommand extends Command
 
             usleep($usleep);
         } while ($isLive());
+
+        return 0;
     }
 }
