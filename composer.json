@@ -11,7 +11,7 @@
     }],
     "require": {
         "php": ">=7.4",
-        "symfony/event-dispatcher": "~4.0|~5.0|~6.0",
+        "symfony/event-dispatcher": "~4.0|~5.0|~6.0|~7.0",
         "fulll/command-bus": "^3.5.1"
     },
     "repositories": [
